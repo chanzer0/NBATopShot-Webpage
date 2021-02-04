@@ -1,0 +1,13 @@
+.navbar a {
+    text-decoration: none !important;
+    color: darkgrey !important;
+    padding-right: 2rem;
+}
+
+.container {
+    margin-top: 1rem;
+}
+
+#title {
+    color: white !important;
+}
