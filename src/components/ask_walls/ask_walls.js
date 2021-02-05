@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Typeahead } from 'react-bootstrap-typeahead';
 import Form from 'react-bootstrap/Form';
-import PlayerCard from "./player_card/player_card";
+import AskWallCard from "./ask_wall_card/ask_wall_card";
 import { Grid } from '@material-ui/core/'
 
 
@@ -49,18 +49,16 @@ class AskWalls extends Component {
                         onChange={this.setSelectedSet}
                         options={this.state.sets.map(set => { return set.flowName + " - Series " + set.flowSeriesNumber; })}
                         selected={this.state.selectedSetName[0]}
-                        placeholder="Choose a set..."
-                    />
+                        placeholder="Choose a set..." />
                 </Form.Group>
 
                 <Grid
                     container
                     spacing={2}
                     direction={'row'}
-                    justify={'space-around'}
-                >
+                    justify={'space-around'} >
                     {this.state.momentsFromSet.map(moment => (
-                        <PlayerCard key={moment.id} moment={moment}></PlayerCard>
+                        <AskWallCard key={moment.id} moment={moment}></AskWallCard>
                     ))}
                 </Grid>
             </Fragment>
@@ -99,7 +97,7 @@ class AskWalls extends Component {
             })
             .then(res => res.json())
             .then(data => {
-                this.setState({ momentsFromSet: data.data.searchMomentListings.data.searchSummary.data.data })
+                this.setState({ momentsFromSet: data.data.searchMomentListings.data.searchSummary.data.data.slice(0, 10) })
             });
     }
 }
