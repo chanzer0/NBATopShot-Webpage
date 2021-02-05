@@ -1,12 +1,19 @@
 import React, { Component, Fragment } from "react";
 import { Typeahead } from 'react-bootstrap-typeahead';
 import Form from 'react-bootstrap/Form';
+import PlayerCard from "./player_card/player_card";
+import { Grid } from '@material-ui/core/'
 
 
 class AskWalls extends Component {
     constructor(props) {
         super(props);
-        this.state = { sets: [], selectedSetName: [], selectedSetData: {}, momentsFromSet: [] };
+        this.state = {
+            sets: [],
+            selectedSetName: [],
+            selectedSetData: {},
+            momentsFromSet: []
+        };
     }
 
     componentDidMount() {
@@ -46,9 +53,16 @@ class AskWalls extends Component {
                     />
                 </Form.Group>
 
-                {this.state.momentsFromSet.map(moment => (
-                    <p key={moment.id}>{moment.play.stats.playerName} - {moment.play.description}</p>
-                ))}
+                <Grid
+                    container
+                    spacing={2}
+                    direction={'row'}
+                    justify={'space-around'}
+                >
+                    {this.state.momentsFromSet.map(moment => (
+                        <PlayerCard key={moment.id} moment={moment}></PlayerCard>
+                    ))}
+                </Grid>
             </Fragment>
         );
     }
@@ -85,7 +99,6 @@ class AskWalls extends Component {
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data.data.searchMomentListings.data.searchSummary.data.data);
                 this.setState({ momentsFromSet: data.data.searchMomentListings.data.searchSummary.data.data })
             });
     }
